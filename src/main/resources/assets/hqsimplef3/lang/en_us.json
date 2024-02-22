@@ -1,0 +1,13 @@
+{
+  "key.categories.hqsimplef3": "HQSimpleF3",
+  "key.hqsimplef3_setting": "HQSimpleF3 Setting",
+  "message.hqsimplef3.enabled": "§aEnabled",
+  "message.hqsimplef3.disabled": "§cDisabled",
+  "message.hqsimplef3.simple_f3_enabled": "Simple F3: %s",
+  "message.hqsimplef3.fps": "Show FPS: %s",
+  "message.hqsimplef3.fps_below_space": "FPS Below space: %s",
+  "message.hqsimplef3.coordinate_single_line": "Coordinate single line: %s",
+  "message.hqsimplef3.yaw_and_pitch": "Show yaw and pitch: %s",
+  "message.hqsimplef3.korean_direction": "Show korean direction: %s",
+  "message.hqsimplef3.korean_biome": "Show korean biome: %s"
+}

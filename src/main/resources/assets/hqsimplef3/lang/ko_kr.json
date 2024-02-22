@@ -1,0 +1,13 @@
+{
+  "key.categories.hqsimplef3": "HQSimpleF3",
+  "key.hqsimplef3_setting": "HQSimpleF3 설정",
+  "message.hqsimplef3.enabled": "§a활성화",
+  "message.hqsimplef3.disabled": "§c비활성화",
+  "message.hqsimplef3.simple_f3_enabled": "심플 F3: %s",
+  "message.hqsimplef3.fps": "FPS 표시: %s",
+  "message.hqsimplef3.fps_below_space": "FPS 아래 한 줄 띄우기: %s",
+  "message.hqsimplef3.coordinate_single_line": "좌표 한 줄로 표시: %s",
+  "message.hqsimplef3.yaw_and_pitch": "Yaw/Pitch 표시: %s",
+  "message.hqsimplef3.korean_direction": "방향 한국어로 표시: %s",
+  "message.hqsimplef3.korean_biome": "바이옴 한국어로 표시: %s"
+}

@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "kr.cosine.simplef3.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "hqsimplef3.refmap.json",
+  "mixins": [],
+  "client": [
+    "GuiMixin",
+    "ForgeGuiMixin",
+    "DebugScreenOverlayMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
