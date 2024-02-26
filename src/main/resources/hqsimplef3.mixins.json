@@ -3,14 +3,12 @@
   "minVersion": "0.8",
   "package": "kr.cosine.simplef3.mixin",
   "compatibilityLevel": "JAVA_17",
-  "refmap": "hqsimplef3.refmap.json",
-  "mixins": [],
-  "client": [
-    "GuiMixin",
-    "ForgeGuiMixin",
-    "DebugScreenOverlayMixin"
+  "mixins": [
+    "MinecraftServerMixin"
   ],
+  "client": [],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "refmap": "HQSimpleF3-refmap.json"
 }

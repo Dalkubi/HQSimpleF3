@@ -8,14 +8,15 @@
 		"Cosine_A"
 	],
 	"contact": {
-		"discord": "https://discord.gg/hUkaca9ZQu",
-		"sources": "https://github.com/CosinePlugin/HQSimpleF3"
+		"homepage": "https://discord.gg/hUkaca9ZQu",
+		"sources": "https://github.com/CosinePlugin/HQSimpleF3",
+		"issues": "https://discord.gg/hUkaca9ZQu"
 	},
 	"license": "All Rights Reserved",
 	"icon": "assets/hqsimplef3/icon.png",
-	"environment": "*",
+	"environment": "client",
 	"entrypoints": {
-		"main": [
+		"client": [
 			"kr.cosine.simplef3.HQSimpleF3"
 		]
 	},
@@ -26,8 +27,5 @@
 		"fabricloader": ">=0.15.7",
 		"fabric-api": "*",
 		"minecraft": "1.20.1"
-	},
-	"suggests": {
-		"another-mod": "*"
 	}
 }

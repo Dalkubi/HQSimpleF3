@@ -1,22 +1,47 @@
 @file:Suppress("PropertyName")
 
-import org.spongepowered.asm.gradle.plugins.MixinExtension
-import java.text.SimpleDateFormat
-import java.util.*
-
 val minecraft_version: String by project
-val forge_version: String by project
+val yarn_mappings: String by project
+val loader_version: String by project
+val fabric_version: String by project
 
-val mapping_channel: String by project
-val mapping_version: String by project
-
-val mod_id: String by project
-val mod_name: String by project
-val mod_license: String by project
 val mod_version: String by project
-val mod_group_id: String by project
-val mod_authors: String by project
+val maven_group: String by project
+val archives_base_name: String by project
 
+plugins {
+    id("fabric-loom") version "1.5-SNAPSHOT"
+}
+
+group = maven_group
+version = mod_version
+
+dependencies {
+    minecraft("com.mojang", "minecraft", minecraft_version)
+    mappings("net.fabricmc", "yarn", yarn_mappings, classifier = "v2")
+    modImplementation("net.fabricmc", "fabric-loader", loader_version)
+    modImplementation("net.fabricmc.fabric-api", "fabric-api", fabric_version)
+    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+}
+
+tasks {
+    jar {
+        archiveClassifier.set("")
+        destinationDirectory.set(File("C:/Users/rhdwl/AppData/Roaming/MultiMC/instances/1.20.1/.minecraft/mods"))
+    }
+    withType<JavaCompile>().configureEach {
+        options.encoding = "UTF-8"
+        options.release.set(17)
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+/*
 plugins {
     id("net.minecraftforge.gradle") version "[6.0,6.2)"
 }
@@ -92,4 +117,4 @@ tasks {
     withType<JavaCompile>().configureEach {
         options.encoding = "UTF-8"
     }
-}
+}*/
