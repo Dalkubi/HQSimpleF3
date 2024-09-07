@@ -1,7 +1,7 @@
 @file:Suppress("PropertyName")
 
 plugins {
-    id("fabric-loom") version "1.5-SNAPSHOT"
+    id("fabric-loom") version "1.6-SNAPSHOT"
 }
 
 group = getProperty("maven_group")

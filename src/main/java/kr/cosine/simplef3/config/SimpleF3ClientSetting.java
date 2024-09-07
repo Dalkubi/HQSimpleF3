@@ -13,6 +13,4 @@ public class SimpleF3ClientSetting {
     public boolean yawAndPitch = false;
 
     public boolean koreanDirection = true;
-
-    public boolean koreanBiome = true;
 }

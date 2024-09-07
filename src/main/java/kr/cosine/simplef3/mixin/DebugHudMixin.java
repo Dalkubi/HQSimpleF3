@@ -8,9 +8,11 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.DebugHud;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
@@ -77,16 +79,16 @@ public abstract class DebugHudMixin {
                 directionText = direction.getName();
             }
             list.add("방향 : " + directionText);
-            list.add("바이옴 : " + getBiomeName(world.getBiome(blockPos), simpleF3ClientSetting.koreanBiome));
+            list.add("바이옴 : " + getBiomeName(world.getBiome(blockPos)));
 
             drawText(context, list, true);
             callbackInfo.cancel();
         }
     }
 
-    private String getBiomeName(RegistryEntry<Biome> biome, boolean korean) {
+    private String getBiomeName(RegistryEntry<Biome> biome) {
         return biome.getKeyOrValue().map(
-            (biomeKey) -> korean ? NameRegistry.findBiomeKoreanName(biomeKey) : biomeKey.getValue().toString(),
+            (biomeKey) -> I18n.translate(biomeKey.getValue().toTranslationKey("biome")),
             (biomeKey) -> "unregistered:" + biomeKey
         );
     }
