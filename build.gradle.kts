@@ -1,7 +1,7 @@
 @file:Suppress("PropertyName")
 
 plugins {
-    id("fabric-loom") version "1.6-SNAPSHOT"
+    id("fabric-loom") version "1.10-SNAPSHOT"
 }
 
 group = getProperty("maven_group")
@@ -19,13 +19,13 @@ dependencies {
 tasks {
     withType<JavaCompile>().configureEach {
         options.encoding = "UTF-8"
-        options.release = 17
+        options.release = 21
     }
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 fun getProperty(key: String): String = extra[key].toString()

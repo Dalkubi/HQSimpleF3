@@ -9,12 +9,10 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.option.AttackIndicator;
 import net.minecraft.client.option.GameOptions;
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.RotationAxis;
 import net.minecraft.world.GameMode;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,47 +24,55 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class InGameHudMixin {
 
     @Shadow
-    private static final Identifier CROSSHAIR_TEXTURE = new Identifier("hud/crosshair");
+    private static final Identifier CROSSHAIR_TEXTURE =
+            Identifier.of("minecraft", "hud/crosshair");
 
     @Shadow
-    private static final Identifier CROSSHAIR_ATTACK_INDICATOR_FULL_TEXTURE = new Identifier("hud/crosshair_attack_indicator_full");
+    private static final Identifier CROSSHAIR_ATTACK_INDICATOR_FULL_TEXTURE =
+            Identifier.of("minecraft", "hud/crosshair_attack_indicator_full");
 
     @Shadow
-    private static final Identifier CROSSHAIR_ATTACK_INDICATOR_BACKGROUND_TEXTURE = new Identifier("hud/crosshair_attack_indicator_background");
+    private static final Identifier CROSSHAIR_ATTACK_INDICATOR_BACKGROUND_TEXTURE =
+            Identifier.of("minecraft", "hud/crosshair_attack_indicator_background");
 
     @Shadow
-    private static final Identifier CROSSHAIR_ATTACK_INDICATOR_PROGRESS_TEXTURE = new Identifier("hud/crosshair_attack_indicator_progress");
+    private static final Identifier CROSSHAIR_ATTACK_INDICATOR_PROGRESS_TEXTURE =
+            Identifier.of("minecraft", "hud/crosshair_attack_indicator_progress");
+
 
     @Shadow
     public MinecraftClient client;
 
-    @Shadow
-    private int scaledWidth;
-
-    @Shadow
-    private int scaledHeight;
+//    @Shadow int scaledWidth;
+//
+//    @Shadow int scaledHeight;
 
     @Shadow
     public abstract boolean shouldRenderSpectatorCrosshair(HitResult hitResult);
 
     @Inject(method = "renderCrosshair", at = @At("HEAD"), cancellable = true)
-    public void renderCrosshair(DrawContext context, CallbackInfo callbackInfo) {
+    public void renderCrosshair(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
         SimpleF3ClientSetting simpleF3ClientSetting = SimpleF3ClientConfig.getSimpleF3ClientSetting();
         if (simpleF3ClientSetting.isEnabled) {
             GameOptions gameOptions = this.client.options;
             if (gameOptions.getPerspective().isFirstPerson()) {
                 if (this.client.interactionManager.getCurrentGameMode() != GameMode.SPECTATOR || this.shouldRenderSpectatorCrosshair(this.client.crosshairTarget)) {
                     RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.ONE_MINUS_DST_COLOR, GlStateManager.DstFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);
-                    context.drawGuiTexture(CROSSHAIR_TEXTURE, (this.scaledWidth - 15) / 2, (this.scaledHeight - 15) / 2, 15, 15);
+
+                    int width = context.getScaledWindowWidth();
+                    int height = context.getScaledWindowHeight();
+
+                    context.drawGuiTexture(CROSSHAIR_TEXTURE, (width - 15) / 2, (height - 15) / 2, 15, 15);
+
                     if (this.client.options.getAttackIndicator().getValue() == AttackIndicator.CROSSHAIR) {
                         float f = this.client.player.getAttackCooldownProgress(0.0F);
                         boolean bl = false;
-                        if (this.client.targetedEntity != null && this.client.targetedEntity instanceof LivingEntity && f >= 1.0F) {
-                            bl = this.client.player.getAttackCooldownProgressPerTick() > 5.0F;
-                            bl &= this.client.targetedEntity.isAlive();
+                        if (this.client.targetedEntity instanceof LivingEntity && f >= 1.0F) {
+                            bl = this.client.player.getAttackCooldownProgressPerTick() > 5.0F && this.client.targetedEntity.isAlive();
                         }
-                        int j = this.scaledHeight / 2 - 7 + 16;
-                        int k = this.scaledWidth / 2 - 8;
+
+                        int j = height / 2 - 7 + 16;
+                        int k = width / 2 - 8;
                         if (bl) {
                             context.drawGuiTexture(CROSSHAIR_ATTACK_INDICATOR_FULL_TEXTURE, k, j, 16, 16);
                         } else if (f < 1.0F) {
@@ -78,7 +84,7 @@ public abstract class InGameHudMixin {
                     RenderSystem.defaultBlendFunc();
                 }
             }
-            callbackInfo.cancel();
+            ci.cancel();
         }
     }
 }

@@ -13,4 +13,9 @@ public class SimpleF3ClientSetting {
     public boolean yawAndPitch = false;
 
     public boolean koreanDirection = true;
+
+    public int offsetX = 0;
+    public int offsetY = 0;
+    public float scale = 1.0f;
+
 }

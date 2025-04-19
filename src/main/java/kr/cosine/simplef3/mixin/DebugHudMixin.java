@@ -9,6 +9,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.DebugHud;
 import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -106,6 +107,14 @@ public abstract class DebugHudMixin {
         SimpleF3ClientSetting simpleF3ClientSetting = SimpleF3ClientConfig.getSimpleF3ClientSetting();
         int scaledWindowWidth = context.getScaledWindowWidth();
         if (simpleF3ClientSetting.isEnabled) {
+            int offsetX = simpleF3ClientSetting.offsetX;
+            int offsetY = simpleF3ClientSetting.offsetY;
+            float scale = simpleF3ClientSetting.scale;
+
+            MatrixStack matrixStack = context.getMatrices();
+            matrixStack.push();
+            matrixStack.scale(scale, scale, 1.0F);
+
             int i = 9;
             for (int j = 0; j < text.size(); ++j) {
                 String s = text.get(j);
@@ -113,7 +122,7 @@ public abstract class DebugHudMixin {
                     int k = textRenderer.getWidth(s);
                     int l = left ? 2 : scaledWindowWidth - 2 - k;
                     int i1 = 2 + i * j;
-                    context.fill(l - 1, i1 - 1, l + k + 1, i1 + i - 1, -1873784752);
+                    context.fill(l - 1 + offsetX, i1 - 1 + offsetY, l + k + 1+offsetX, i1 + i - 1+offsetY, -1873784752);
                 }
             }
             for (int j1 = 0; j1 < text.size(); ++j1) {
@@ -127,13 +136,14 @@ public abstract class DebugHudMixin {
                         String key = split[0];
                         String value = split[1];
                         int valueWidth = textRenderer.getWidth(value) - 2;
-                        context.drawText(textRenderer, key + " §7: ", l1, i2, 16777215, false);
-                        context.drawText(textRenderer, value, k1 - valueWidth, i2, hexColor, false);
+                        context.drawText(textRenderer, key + " §7: ", l1+offsetX, i2+offsetY, 16777215, false);
+                        context.drawText(textRenderer, value, k1 - valueWidth + offsetX, i2+offsetY, hexColor, false);
                     } else {
-                        context.drawText(textRenderer, s1, l1, i2, 16777215, false);
+                        context.drawText(textRenderer, s1, l1 + offsetX , i2 + offsetY , 16777215, false);
                     }
                 }
             }
+            matrixStack.pop();
             callbackInfo.cancel();
         }
     }
